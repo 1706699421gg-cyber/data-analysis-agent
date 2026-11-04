@@ -1,0 +1,13 @@
+langgraph
+langgraph-checkpoint-sqlite
+langchain-openai
+langchain-core
+langchain-community
+langchain-huggingface
+langfuse>=3.8.0
+faiss-cpu
+sentence-transformers
+pandas
+matplotlib
+chardet
+python-dotenv
