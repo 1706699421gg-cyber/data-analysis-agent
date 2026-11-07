@@ -12,7 +12,7 @@ def describe_column(csv_path: str, column: str) -> str:
         return f"错误：列 '{column}' 不存在。可用列：{list(df.columns)}"
     if not pd.api.types.is_numeric_dtype(df[column]):
         return f"错误：列 '{column}' 不是数值列（实际类型 {df[column].dtype}），无法做描述统计"
-    return df[column].describe().to_string()
+    return f"sum: {df[column].sum():,.2f}\n" + df[column].describe().to_string()
 
 
 @tool
@@ -27,7 +27,8 @@ def groupby_aggregate(csv_path: str, group_col: str, value_col: str, agg: str) -
     if agg != "count" and not pd.api.types.is_numeric_dtype(df[value_col]):
         return f"错误：value_col='{value_col}' 不是数值列，无法做 {agg} 聚合"
     result = df.groupby(group_col)[value_col].agg(agg).sort_values(ascending=False)
-    return result.to_string()
+    total = df[value_col].agg(agg)
+    return f"{result.to_string()}\n\n【总计（{agg}）】: {total:,.2f}"
 
 @tool
 def recall_history(query: str) -> str:

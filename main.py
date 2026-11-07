@@ -14,10 +14,11 @@ def main():
         sys.exit(1)
     csv_path, question = sys.argv[1], sys.argv[2]
     thread_id = sys.argv[3] if len(sys.argv) > 3 else "default"
+    prompt_version = sys.argv[4] if len(sys.argv) > 4 else "v2"
 
     handler = CallbackHandler()
     with SqliteSaver.from_conn_string("agent.db") as checkpointer:
-        app = build_app(csv_path, checkpointer=checkpointer)
+        app = build_app(csv_path, checkpointer=checkpointer, prompt_version=prompt_version)
         result = app.invoke(
             {"messages": [HumanMessage(content=question)]},
             config={"callbacks": [handler], 

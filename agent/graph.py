@@ -9,7 +9,7 @@ from langchain_core.messages import SystemMessage
 
 from tools.csv_tools import get_csv_overview
 from tools.analysis_tools import describe_column, groupby_aggregate, filter_and_stats, plot_bar, recall_history
-from agent.prompts import SYSTEM_PROMPT
+from agent.prompts import PROMPTS
 
 TOOLS = [get_csv_overview, describe_column, groupby_aggregate, filter_and_stats, plot_bar, recall_history]
 
@@ -20,11 +20,12 @@ llm = ChatOpenAI(
     temperature=0,
 ).bind_tools(TOOLS)
 
-def build_app(csv_path: str, checkpointer=None):
+def build_app(csv_path: str, checkpointer=None, prompt_version: str = "v2"):
+    system_prompt = PROMPTS[prompt_version]
     """构建 Agent。csv_path 填进 Prompt；checkpointer 明天讲记忆时启用"""
 
     def agent_with_csv(state: MessagesState):
-        messages = [SystemMessage(content=SYSTEM_PROMPT.format(csv_path=csv_path))]
+        messages = [SystemMessage(content=system_prompt.format(csv_path=csv_path))]
         messages += list(state["messages"])
         return {"messages": [llm.invoke(messages)]}
 
