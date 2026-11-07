@@ -8,10 +8,10 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage
 
 from tools.csv_tools import get_csv_overview
-from tools.analysis_tools import describe_column, groupby_aggregate, recall_history
+from tools.analysis_tools import describe_column, groupby_aggregate, filter_and_stats, plot_bar, recall_history
 from agent.prompts import SYSTEM_PROMPT
 
-TOOLS = [get_csv_overview, describe_column, groupby_aggregate, recall_history]
+TOOLS = [get_csv_overview, describe_column, groupby_aggregate, filter_and_stats, plot_bar, recall_history]
 
 llm = ChatOpenAI(
     model="deepseek-chat",
