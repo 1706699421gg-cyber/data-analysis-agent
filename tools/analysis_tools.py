@@ -65,7 +65,7 @@ def plot_bar(csv_path: str, group_col: str, value_col: str, title: str) -> str:
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    plt.rcParams["font.sans-serif"] = ["SimHei", "Microsoft YaHei"]
+    plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "Noto Sans CJK SC", "WenQuanYi Zen Hei"]
     plt.rcParams["axes.unicode_minus"] = False
 
     df = smart_read_csv(csv_path)
